@@ -51,7 +51,18 @@ Player.prototype.handleInput = function(k) {
         case 'down':
             this.y += 80;
             break;
-
+    }
+    if (this.x > 400) {
+        this.x = 400;
+    }
+    if (this.x < 0) {
+        this.x = 0;
+    }
+    if (this.y > 390) {
+        this.y = 390;
+    }
+    if (this.y < 0) {
+        this.y = 0;
     }
 }
 
