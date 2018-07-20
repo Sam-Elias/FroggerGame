@@ -29,6 +29,9 @@ const Player = function() {
 }
 // This class requires an update(), render() and
 // a handleInput() method.
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
 
 
 // Now instantiate your objects.
