@@ -11,6 +11,18 @@ var Enemy = function(eType, x, y, speed) {
     this.y = y;
 };
 
+const modal = document.querySelector('.modal-background');
+
+const replayBtn = document.querySelector('.modalBtn');
+
+replayBtn.addEventListener('click', replay);
+
+function replay() {
+    console.log('hi');
+    modal.style.display = 'none';
+}
+
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -37,7 +49,9 @@ const Player = function() {
     this.reset = function(){
         this.x = 200;
         this.y = 390;
+        modal.style.display = 'none';
     }
+    
 }
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -48,9 +62,11 @@ Player.prototype.update = function(dt) {
             this.reset();
             console.log('reset')
         } 
+// Detects when the player arrives "water" and show the game over modal.
         if(this.y == 0) {
-            alert('game over!');
+            modal.style.display = 'block'; 
         }
+        
 }}
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
