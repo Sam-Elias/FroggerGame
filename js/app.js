@@ -34,12 +34,24 @@ const Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 390;
+    this.reset = function(){
+        this.x = 200;
+        this.y = 390;
+    }
 }
 // This class requires an update(), render() and
 // a handleInput() method.
-Player.prototype.update = function(dt) {
-
-}
+Player.prototype.update = function(dt) { 
+// Detects when a collision happens and move the player back to initial position
+   for(enemy of allEnemies) {
+        if((this.y-5 == enemy.y) && (this.x < enemy.x+50 && this.x > enemy.x-50)){
+            this.reset();
+            console.log('reset')
+        } 
+        if(this.y == 0) {
+            alert('game over!');
+        }
+}}
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
