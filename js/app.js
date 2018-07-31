@@ -18,8 +18,8 @@ const replayBtn = document.querySelector('.modalBtn');
 replayBtn.addEventListener('click', replay);
 
 function replay() {
-    console.log('hi');
-    modal.style.display = 'none';
+    console.log('replay');
+    player.replay();
 }
 
 
@@ -49,7 +49,6 @@ const Player = function() {
     this.reset = function(){
         this.x = 200;
         this.y = 390;
-        modal.style.display = 'none';
     }
     
 }
@@ -64,10 +63,17 @@ Player.prototype.update = function(dt) {
         } 
 // Detects when the player arrives "water" and show the game over modal.
         if(this.y == 0) {
-            modal.style.display = 'block'; 
+            modal.style.display = 'block';
+            this.y = 0; 
         }
         
 }}
+// resets the board for a new game
+Player.prototype.replay = function() {
+    this.x = 200;
+    this.y = 390;
+    modal.style.display = 'none';
+} 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
