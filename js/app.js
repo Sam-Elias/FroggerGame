@@ -1,47 +1,26 @@
-// Enemies our player must avoid
+// Enemies constructor
 var Enemy = function(eType, x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = eType;
     this.speed = speed;
     this.x = x;
     this.y = y;
 };
 
-const modal = document.querySelector('.modal-background');
-
-const replayBtn = document.querySelector('.modalBtn');
-
-replayBtn.addEventListener('click', replay);
-
-function replay() {
-    console.log('replay');
-    player.replay();
-}
-
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+// Updates the enemy's position over time
 Enemy.prototype.update = function(dt) {
     if (this.x < 500) {
         this.x += this.speed * dt 
     } else if (this.x >= 500){
         this.x = -50;
     }
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 };
 
-// Draw the enemy on the screen, required method for game
+// Draws enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
+// Player constructor
 const Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
@@ -49,11 +28,10 @@ const Player = function() {
     this.reset = function(){
         this.x = 200;
         this.y = 390;
-    }
-    
+    }    
 }
-// This class requires an update(), render() and
-// a handleInput() method.
+
+//Updates player's position over time
 Player.prototype.update = function(dt) { 
 // Detects when a collision happens and move the player back to initial position
    for(enemy of allEnemies) {
@@ -68,15 +46,18 @@ Player.prototype.update = function(dt) {
         }
         
 }}
-// resets the board for a new game
+// Resets the board for a new game
 Player.prototype.replay = function() {
     this.x = 200;
     this.y = 390;
     modal.style.display = 'none';
 } 
+// Draws player on every new rendering
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
+// Positions player based on event listener
 Player.prototype.handleInput = function(k) {
     switch(k) {
         case 'left':
@@ -106,19 +87,16 @@ Player.prototype.handleInput = function(k) {
     }
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
+// Instantiates enemies
 const allEnemies = [
     new Enemy('images/enemy-bug.png', 0, 65, 100),
     new Enemy('images/Rock.png', 0, 145, 250),
     new Enemy('images/enemy-bug.png', 0, 225, 160)
 ]
-// Place the player object in a variable called player
+// Instantiate player
 const player = new Player();
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Listens for key presses
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -129,3 +107,14 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Game Over modal
+const modal = document.querySelector('.modal-background');
+// Game Over modal button
+const replayBtn = document.querySelector('.modalBtn');
+// Modal button event listener
+replayBtn.addEventListener('click', replay);
+// Replay function declaration
+function replay() {
+    player.replay();
+}

@@ -29,3 +29,7 @@ canvas {
     width: 140px;
     font: 20px arial;
   }
+  .modalBtn:hover {
+    background-color: blue;
+    color: white;
+  }
